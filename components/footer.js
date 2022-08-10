@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "../styles/Home.module.css";
-import Image from "next/image";
 
 function footer() {
   return (
@@ -13,7 +12,7 @@ function footer() {
         >
           Visit Stack Overflow
           <span className={styles.logo}>
-            <Image
+            <img
               src="/stackoverflow-icon.svg"
               alt="Stack Overflow Logo"
               width={32}

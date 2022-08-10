@@ -2,20 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Link from "next/link";
+import * as fs from "fs";
 
-function blog() {
-  const [blog, setblog] = useState([]);
-  useEffect(() => {
-    console.log("useEffect is running");
-    fetch("http://localhost:3000/api/blogs")
-      .then((a) => {
-        return a.json();
-      })
-      .then((parsed) => {
-        console.log(parsed);
-        setblog(parsed);
-      });
-  }, []);
+function Blog(props) {
+  const [blog, setblog] = useState(props.allBlogs);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -34,7 +25,7 @@ function blog() {
                 <Link href={`/blogposts/${blogitems.slug}`}>
                   <a className={styles.card}>
                     <h2>{blogitems.title} &rarr;</h2>
-                    <p>{blogitems.content.substr(0, 400)}</p>
+                    <p>{blogitems.metadesc.substr(0, 400)}</p>
                   </a>
                 </Link>
               </div>
@@ -45,5 +36,33 @@ function blog() {
     </div>
   );
 }
+//^^^^^^^^^^^^^^^^^for server side rendering^^^^^^^^^^^^^
+// export async function getServerSideProps(context) {
+//   let data = await fetch("http://localhost:3000/api/blogs");
+//   let allBlogs = await data.json();
 
-export default blog;
+//   return {
+//     props: { allBlogs }, // will be passed to the page component as props
+//   };
+// }
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//^^^^^^^^^^^^^^^^^for static side rendering^^^^^^^^^^^^^
+export async function getStaticProps(context) {
+  let data = await fs.promises.readdir("blogData");
+  let myFiles;
+  let allBlogs = [];
+
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i];
+    // console.log(item);
+    myFiles = await fs.promises.readFile(`blogData/${item}`, "utf-8");
+    // console.log(myFiles);
+    allBlogs.push(JSON.parse(myFiles));
+  }
+
+  return {
+    props: { allBlogs }, // will be passed to the page component as props
+  };
+}
+export default Blog;
