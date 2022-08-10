@@ -1,8 +1,7 @@
 import Head from "next/head";
-import Image from "next/image";
-import Script from "next/script";
+// import Script from "next/script";
 import styles from "../styles/Home.module.css";
-import Navbar from "./navbar";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -15,11 +14,10 @@ export default function Home() {
       </Head>
       {/* <Script src="/alert.js" strategy="lazyOnload"></Script> */}
 
-      <Navbar />
       <main className={styles.main}>
         <h1 className={styles.title}>
           Error{" "}
-          <a href="http://localhost:3000" target="_blank">
+          <a href="/" target="_blank">
             Blog
           </a>
         </h1>
@@ -31,76 +29,79 @@ export default function Home() {
         <h2>Latest Posts</h2>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>How to use google analytics with next.js app? &rarr;</h2>
-            <p>
-              I'm using styled-components with next.js so my styles need to be
-              server-side rendered, hence how can I add google analytics to my
-              website? … I checked next.js google analytics example but as I
-              said my...
-            </p>
-          </a>
+          <Link href="/blogposts/How-to-use-google-analytics-with-nextjs">
+            <a className={styles.card}>
+              <h2>How to use google analytics with next.js app? &rarr;</h2>
+              <p>
+                I'm using styled-components with next.js so my styles need to be
+                server-side rendered, hence how can I add google analytics to my
+                website? … I checked next.js google analytics example but as I
+                said my...
+              </p>
+            </a>
+          </Link>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+          <Link href="/blogposts/Learn-Nextjs">
+            <a className={styles.card}>
+              <h2>Learn Nextjs &rarr;</h2>
+              <p>
+                I'm using styled-components with next.js so my styles need to be
+                server-side rendered, hence how can I add google analytics to my
+                website? … I checked next.js google analytics example but as I
+                said my...
+              </p>
+            </a>
+          </Link>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
+          <Link href="/blogposts/Learn-Reactjs">
+            <a className={styles.card}>
+              <h2>Learn Reactjs &rarr;</h2>
+              <p>
+                I'm using styled-components with next.js so my styles need to be
+                server-side rendered, hence how can I add google analytics to my
+                website? … I checked next.js google analytics example but as I
+                said my...
+              </p>
+            </a>
+          </Link>
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <Link href="/blogposts/Learn-Html">
+            <a className={styles.card}>
+              <h2>Learn Html &rarr;</h2>
+              <p>
+                I'm using styled-components with next.js so my styles need to be
+                server-side rendered, hence how can I add google analytics to my
+                website? … I checked next.js google analytics example but as I
+                said my...
+              </p>
+            </a>
+          </Link>
+
+          <Link href="/blogposts/Learn-Css">
+            <a className={styles.card}>
+              <h2>Learn Css &rarr;</h2>
+              <p>
+                I'm using styled-components with next.js so my styles need to be
+                server-side rendered, hence how can I add google analytics to my
+                website? … I checked next.js google analytics example but as I
+                said my...
+              </p>
+            </a>
+          </Link>
+
+          <Link href="/blogposts/Learn-Routing">
+            <a className={styles.card}>
+              <h2>Learn Routing &rarr;</h2>
+              <p>
+                I'm using styled-components with next.js so my styles need to be
+                server-side rendered, hence how can I add google analytics to my
+                website? … I checked next.js google analytics example but as I
+                said my...
+              </p>
+            </a>
+          </Link>
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://stackoverflow.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Visit Stack Overflow
-          <span className={styles.logo}>
-            <Image
-              src="/stackoverflow-icon.svg"
-              alt="Stack Overflow Logo"
-              width={32}
-              height={19}
-            />
-          </span>
-        </a>
-      </footer>
     </div>
   );
 }

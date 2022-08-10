@@ -17,9 +17,14 @@ function navbar() {
           ></Image>
         </span>
       </li> */}
-          <Link href="/posts">
+          <Link href="/">
             <a>
-              <li>Posts</li>
+              <li>Home</li>
+            </a>
+          </Link>
+          <Link href="/blog">
+            <a>
+              <li>Blog</li>
             </a>
           </Link>
           <Link href="https://github.com">
