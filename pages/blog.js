@@ -34,7 +34,7 @@ function blog() {
                 <Link href={`/blogposts/${blogitems.slug}`}>
                   <a className={styles.card}>
                     <h2>{blogitems.title} &rarr;</h2>
-                    <p>{blogitems.content}</p>
+                    <p>{blogitems.content.substr(0, 400)}</p>
                   </a>
                 </Link>
               </div>

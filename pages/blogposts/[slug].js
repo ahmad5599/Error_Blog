@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import blog from "../../styles/Blog.module.css";
 import Head from "next/head";
@@ -6,7 +6,21 @@ import Head from "next/head";
 
 function slug() {
   const router = useRouter();
-  const { slug } = router.query;
+  const [Blog, setBlog] = useState([]);
+  useEffect(() => {
+    console.log("useEffect is running in slug");
+    if (!router.isReady) return;
+    const { slug } = router.query;
+    console.log(slug);
+    fetch(`http://localhost:3000/api/getblogs?slug=${slug}`)
+      .then((a) => {
+        return a.json();
+      })
+      .then((parsed) => {
+        console.log(parsed);
+        setBlog(parsed);
+      });
+  }, [router.isReady]);
   return (
     <div>
       <div className={blog.container}>
@@ -16,13 +30,8 @@ function slug() {
 
         <main className={blog.main}>
           <div>
-            <h1 className={blog.title}>{slug}</h1>
-            <p className={blog.description}>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat
-              laboriosam sunt incidunt minus obcaecati nulla repudiandae
-              perspiciatis voluptate dolor provident culpa vitae harum repellat
-              corrupti fugit, magni iste. Mollitia, debitis.
-            </p>
+            <h1 className={blog.title}>{Blog.title}</h1>
+            <p className={blog.description}>{Blog.content}</p>
           </div>
         </main>
       </div>
