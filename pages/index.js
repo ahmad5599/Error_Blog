@@ -1,9 +1,10 @@
 import Head from "next/head";
-// import Script from "next/script";
+import { useState } from "react"; // import Script from "next/script";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 
-export default function Home() {
+export default function Home(props) {
+  const [blog, setblog] = useState(props.allBlogs);
   return (
     <div className={styles.container}>
       <Head>
@@ -27,8 +28,25 @@ export default function Home() {
         </p>
 
         <h2>Latest Posts</h2>
+        <br />
 
         <div className={styles.grid}>
+          {blog.map((blogitems, index) => {
+            return (
+              index < 5 && (
+                <div key={blogitems.slug}>
+                  <Link href={`/blogposts/${blogitems.slug}`}>
+                    <a className={styles.card}>
+                      <h2>{blogitems.title} &rarr;</h2>
+                      <p>{blogitems.metadesc.substr(0, 400)}</p>
+                    </a>
+                  </Link>
+                </div>
+              )
+            );
+          })}
+        </div>
+        {/* <div className={styles.grid}>
           <Link href="/blogposts/How-to-use-google-analytics-with-nextjs">
             <a className={styles.card}>
               <h2>How to use google analytics with next.js app? &rarr;</h2>
@@ -99,9 +117,17 @@ export default function Home() {
                 said my...
               </p>
             </a>
-          </Link>
-        </div>
+          </Link> 
+        </div>*/}
       </main>
     </div>
   );
+}
+export async function getServerSideProps(context) {
+  let data = await fetch("http://localhost:3000/api/blogs");
+  let allBlogs = await data.json();
+
+  return {
+    props: { allBlogs }, // will be passed to the page component as props
+  };
 }

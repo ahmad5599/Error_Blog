@@ -1,0 +1,22 @@
+.container {
+  max-width: 45vw;
+  margin: auto;
+}
+.title {
+  font-size: 4rem;
+  display: flex;
+  justify-content: center;
+}
+.cvButton {
+  background-color: skyblue;
+  color: black;
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  border-radius: 10px;
+  border: none;
+}
+.main {
+  font-size: 1.5rem;
+}
