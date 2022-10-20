@@ -2,9 +2,11 @@ import Head from "next/head";
 import { useState } from "react"; // import Script from "next/script";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
+import Blog from "../models/Blog";
+import mongoose from "mongoose";
 
 export default function Home(props) {
-  const [blog, setblog] = useState(props.allBlogs);
+  const [blog, setblog] = useState(props.blogs);
   return (
     <div className={styles.container}>
       <Head>
@@ -18,9 +20,9 @@ export default function Home(props) {
       <main className={styles.main}>
         <h1 className={styles.title}>
           Error{" "}
-          <a href="/" target="_blank">
+          <Link href="/" target="_blank">
             Blog
-          </a>
+          </Link>
         </h1>
 
         <p className={styles.description}>
@@ -124,10 +126,12 @@ export default function Home(props) {
   );
 }
 export async function getServerSideProps(context) {
-  let data = await fetch("http://localhost:3000/api/blogs");
-  let allBlogs = await data.json();
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI);
+  }
+  let blogs = await Blog.find();
 
   return {
-    props: { allBlogs }, // will be passed to the page component as props
+    props: { blogs: JSON.parse(JSON.stringify(blogs)) }, // will be passed to the page component as props
   };
 }

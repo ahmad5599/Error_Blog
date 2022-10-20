@@ -12,26 +12,29 @@ function ContactMe() {
     e.preventDefault();
     console.log(name, phone, email, desc);
     const data = { name, phone, email, desc };
-
-    fetch("http://localhost:3000/api/postcontact/", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        console.log("Success:", data);
-        alert("Form submitted");
-        setDesc("");
-        setName("");
-        setPhone("");
-        setEmail("");
+    if (name != "" && phone != "" && email != "" && desc != "") {
+      fetch("http://localhost:3000/api/addcontact/", {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.text())
+        .then((data) => {
+          console.log("Success:", data);
+          alert("Form submitted");
+          setDesc("");
+          setName("");
+          setPhone("");
+          setEmail("");
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      alert("Please fill all the fields");
+    }
   }
   function handleChange(e) {
     if (e.target.name === "name") {
@@ -109,7 +112,7 @@ function ContactMe() {
             </div>
           </div>
 
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className={Contact.btn}>
             Submit
           </button>
         </form>

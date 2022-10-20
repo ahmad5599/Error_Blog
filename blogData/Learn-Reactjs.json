@@ -1,7 +1,0 @@
-{
-  "title": "Learn React.js",
-  "content": "I'm using styled-components with next.js so my styles need to be server-side rendered, hence how can I add google analytics to my website? … I checked next.js google analytics example but as I said my...",
-  "author": "John Doe",
-  "metadesc": "click this post to learn React",
-  "slug": "Learn-React"
-}

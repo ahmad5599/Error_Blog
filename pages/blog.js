@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import Head from "next/head";
 import Link from "next/link";
-import * as fs from "fs";
+import Blog from "../models/Blog";
+import mongoose from "mongoose";
 
-function Blog(props) {
-  const [blog, setblog] = useState(props.allBlogs);
+// import * as fs from "fs";
+
+function blog(props) {
+  const [blog, setBlog] = useState(props.blogs);
 
   return (
     <div className={styles.container}>
@@ -37,32 +40,34 @@ function Blog(props) {
   );
 }
 //^^^^^^^^^^^^^^^^^for server side rendering^^^^^^^^^^^^^
-// export async function getServerSideProps(context) {
-//   let data = await fetch("http://localhost:3000/api/blogs");
-//   let allBlogs = await data.json();
+export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI);
+  }
+  let blogs = await Blog.find();
+
+  return {
+    props: { blogs: JSON.parse(JSON.stringify(blogs)) }, // will be passed to the page component as props
+  };
+}
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+//^^^^^^^^^^^^^^^^^for static side rendering^^^^^^^^^^^^^
+// export async function getStaticProps(context) {
+//   let data = await fs.promises.readdir("blogData");
+//   let myFiles;
+//   let allBlogs = [];
+
+//   for (let i = 0; i < data.length; i++) {
+//     const item = data[i];
+//     // console.log(item);
+//     myFiles = await fs.promises.readFile(`blogData/${item}`, "utf-8");
+//     // console.log(myFiles);
+//     allBlogs.push(JSON.parse(myFiles));
+//   }
 
 //   return {
 //     props: { allBlogs }, // will be passed to the page component as props
 //   };
 // }
-//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-//^^^^^^^^^^^^^^^^^for static side rendering^^^^^^^^^^^^^
-export async function getStaticProps(context) {
-  let data = await fs.promises.readdir("blogData");
-  let myFiles;
-  let allBlogs = [];
-
-  for (let i = 0; i < data.length; i++) {
-    const item = data[i];
-    // console.log(item);
-    myFiles = await fs.promises.readFile(`blogData/${item}`, "utf-8");
-    // console.log(myFiles);
-    allBlogs.push(JSON.parse(myFiles));
-  }
-
-  return {
-    props: { allBlogs }, // will be passed to the page component as props
-  };
-}
-export default Blog;
+export default blog;
